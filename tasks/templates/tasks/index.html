@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Trợ Lý A.I Cá Nhân Hóa - Anh Lập Trình</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+        @keyframes pulseScale {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 8px 30px rgba(39, 174, 96, 0.8);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+  body {
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #fff;
+            border-bottom: 2px solid #e8f5e9;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #27ae60;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: #27ae60;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #27ae60 0%, #00786a 100%);
+            color: #fff;
+            padding: 80px 20px 70px;
+            text-align: center;
+        }
+
+        .hero-tagline {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 8px 22px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            line-height: 1.3;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            opacity: 0.85;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #27ae60;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-content,
+        .course-content,
+        .learning-method,
+        .platform-security,
+        .course-description-section {
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #00786a;
+            margin-bottom: 30px;
+    text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #e8f5e9;
+        }
+
+        .techniques-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .techniques-list li {
+            padding: 14px 0 14px 28px;
+            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .techniques-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        .techniques-list li strong {
+            color: #00786a;
+        }
+
+        .example-box {
+            background: #f0faf4;
+            border: 2px solid #c8ecd4;
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 30px;
+        }
+
+        .example-box h3 {
+            color: #00786a;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+        }
+
+        .example-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .example-note {
+            background: #fff;
+            border-left: 4px solid #27ae60;
+            padding: 14px;
+            margin-top: 16px;
+            font-weight: 600;
+            color: #00786a;
+        }
+
+        .course-content {
+            background: #f9f9f9;
+        }
+
+        .content-section {
+            background: #fff;
+    border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .content-section h3 {
+            color: #333;
+            margin-bottom: 14px;
+            font-size: 1.15rem;
+        }
+
+        .automation-features {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .automation-features li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .automation-features li i {
+            position: absolute;
+            left: 0;
+            top: 3px;
+            font-size: 1.1rem;
+        }
+
+        .platform-security {
+            background: #fff;
+        }
+
+        .learning-method {
+            background: linear-gradient(180deg, #fff 0%, #f5f7fa 100%);
+        }
+
+        .demo-ai-button {
+            display: inline-block;
+            background: #27ae60;
+    color: #fff;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .video-tutorial-section { margin-top: 30px; }
+        .video-section-title { text-align: center; font-size: 1.2rem; color: #333; margin-bottom: 20px; }
+        .video-wrapper-square-tutorial, .video-wrapper-square { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 20px; }
+        .video-wrapper-square-tutorial iframe, .video-wrapper-square iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px; border: none; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+        .video-item { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .video-title { font-size: 0.95rem; color: #333; margin-bottom: 12px; font-weight: 600; }
+
+        .course-description-section {
+            background: #fff;
+        }
+
+        .pricing-description {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-description h3 {
+            color: #00786a;
+            margin: 30px 0 15px;
+            font-size: 1.15rem;
+        }
+
+        .instructor {
+            background: #f9f9f9;
+            padding: 60px 20px;
+        }
+
+        .instructor-card {
+    background: #fff;
+    border-radius: 20px;
+            padding: 36px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .instructor-wrapper {
+            display: flex;
+            gap: 30px;
+    margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .instructor-image {
+            flex-shrink: 0;
+        }
+
+        .instructor-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #27ae60;
+        }
+
+        .instructor-content {
+    flex: 1;
+            min-width: 280px;
+        }
+
+        .instructor-content p {
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .instructor-content-bottom p {
+            text-align: justify;
+            margin-bottom: 14px;
+        }
+
+        .instructor-summary {
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+    padding: 14px;
+    font-weight: 600;
+            color: #00786a;
+        }
+
+        .pricing {
+            background: linear-gradient(135deg, #27ae60 0%, #00786a 100%);
+            padding: 60px 20px;
+        }
+
+        .pricing-card {
+    background: #fff;
+    border-radius: 20px;
+            padding: 36px;
+            max-width: 540px;
+            margin: 0 auto;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .registration-form h2 {
+            font-size: 1.4rem;
+            color: #00786a;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .pricing-note {
+            text-align: center;
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .guarantee-text {
+            background: #e8f5e9;
+            padding: 10px 14px;
+            border-radius: 8px;
+    margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #27ae60;
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #27ae60, #00786a);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: #00786a;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-motto {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .contact-info p {
+            margin: 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            margin-top: 24px;
+        }
+
+        .social-links h4 {
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .social-icons-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .youtube-link {
+            background: #ff0000;
+        }
+
+        .facebook-link {
+            background: #1877f2;
+        }
+
+        .copyright {
+            margin-top: 24px;
+            opacity: 0.6;
+            font-size: 0.85rem;
+        }
+
+        .floating-cta {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #27ae60;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+            z-index: 999;
+            animation: pulseScale 1.5s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .instructor-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .instructor-image {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-text">Anh Lập Trình</div>
+            <nav class="nav-menu"><a href="#home">Trang chủ</a><a href="#about">Về Anh Lập Trình</a></nav>
+        </div>
+    </header>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-tagline">
+                <h2>TẠO HÀNG TRĂM TRỢ LÝ A.I DÀNH RIÊNG CHO LĨNH VỰC CỦA BẠN</h2>
+            </div>
+            <h1 class="hero-title">Chồng Giỏi AI Automation: <strong>Tạo A.I cho chính bạn, phục vụ công việc đặc thù
+                    của bạn, vì nói thẳng ra chỉ có bạn mới hiểu công việc của bạn nhất thôi.</strong></h1>
+            <p class="hero-subtitle">Chẳng A.I nào trên đời có sẵn mà hiểu công việc của bạn cả, trừ khi bạn tự tay tạo
+                ra và huấn luyện nó</p>
+            <p class="hero-description">Nếu bạn chỉ sử dụng thuần A.I hiện nay (không kết hợp với Automation) thì nói
+                thẳng ra cách sử dụng đó hầu hết chỉ mang tính chất biểu diễn, khoe khoang là mình có xài A.I thôi, còn
+                áp dụng vào công việc gần như bằng 0. A.I kết hợp với Automation sẽ tạo ra các trợ lý A.I cá nhân hóa
+                làm các công việc thay bạn như người thật</p><a href="#register" class="cta-button">Đăng Ký Ngay</a>
+        </div>
+    </section>
+    <section class="main-content">
+        <div class="container">
+            <div class="content-block">
+                <h2 class="section-title">Trợ lý AI cá nhân hóa có thể:</h2>
+                <ul class="techniques-list">
+                    <li><strong>Tự động hóa quy trình công việc:</strong> Xử lý các tác vụ lặp đi lặp lại hoàn toàn theo
+                        logic và cách làm riêng, giúp tiết kiệm thời gian tối đa.</li>
+                    <li><strong>Tìm kiếm tài liệu thông minh:</strong> Chủ động quét và tra cứu tài liệu trên Google
+                        Drive, file nội bộ… dựa trên tiêu chí và quy tắc bạn tự thiết kế.</li>
+                    <li><strong>Phân tích dữ liệu chuyên sâu:</strong> Xử lý, tổng hợp, và phân tích thông tin sát với
+                        đặc thù từng cá nhân hoặc lĩnh vực.</li>
+                    <li><strong>Tạo workflow tùy chỉnh:</strong> Dễ dàng xây dựng, tối ưu các quy trình công việc độc
+                        đáo, phù hợp 100% với cách làm việc của bạn.</li>
+                    <li><strong>Hỗ trợ giải quyết sự cố:</strong> Tư vấn, đề xuất giải pháp dựa trên chính nguồn kiến
+                        thức và kinh nghiệm bạn đã cung cấp.</li>
+                    <li><strong>Cá nhân hóa sâu sắc:</strong> AI liên tục học hỏi, thích nghi với phong cách, thói quen
+                        và nhu cầu đặc thù của từng người.</li>
+                    <li><strong>Kết nối đa nền tảng:</strong> Dễ dàng tích hợp với các hệ thống, phần mềm, nền tảng như
+                        Zalo, Slack, Telegram, website… theo mong muốn cá nhân.</li>
+                    <li><strong>Tự học, tự nâng cấp:</strong> AI phát triển, cập nhật khả năng dựa trên hướng đi, mục
+                        tiêu mà bạn chủ động định hình.</li>
+                    <li><strong>Bảo mật &amp; kiểm soát tuyệt đối:</strong> Toàn bộ dữ liệu thuộc quyền kiểm soát của
+                        bạn; AI vận hành độc lập, không phụ thuộc tổ chức ngoài.</li>
+                    <li><strong>Tự do mở rộng:</strong> Chủ động bổ sung, nâng cấp các tính năng, modules mới theo ý
+                        muốn, phục vụ tốt nhất nhu cầu cá nhân.</li>
+                </ul>
+                <div class="example-box">
+                    <h3>Sẽ thế nào nếu có một em trợ lý ảo làm thay cho anh em những công việc hàng ngày liên quan tới
+                        máy tính ?</h3>
+                    <p><strong>"Thấy sướng kinh khủng !"</strong> - anh Minh đang tự tạo ra các trợ lý riêng phục vụ
+                        công việc hàng ngày</p>
+                    <p>Hãy tưởng tượng bạn là một người yêu công nghệ, đam mê tự động hóa giống như rất nhiều anh em
+                        khác. Bạn dành nhiều thời gian "vọc vạch" các công cụ A.I trên thị trường như ChatGPT, Google
+                        Gemini, Claude... Mới đầu, cảm giác thật thú vị! Nhưng chỉ sau một thời gian ngắn, bạn bắt đầu
+                        nhận thấy một vấn đề lớn: các câu trả lời đều quá chung chung, thiếu chiều sâu, không nắm được
+                        nhu cầu và đặc thù công việc của bạn.</p>
+                    <p>Tôi cũng từng như vậy. Đã thử sử dụng ChatGPT với kỳ vọng nó sẽ giúp mình viết content, hỗ trợ
+                        học tập, làm việc... nhưng rồi thất vọng vì cảm giác mọi câu trả lời đều "na ná" nhau.</p>
+                    <p class="example-note">Sự khác biệt là gì? A.I cá nhân hóa hiểu đúng công việc riêng biệt và phong
+                        cách của bạn. Giải quyết các tác vụ đặc thù, không chỉ trả lời lý thuyết chung chung như ChatGPT
+                        thông thường. Tự động hóa, liên kết với phần mềm công việc thực tế, tăng hiệu quả rõ rệt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="course-content">
+        <div class="container">
+            <h2 class="section-title">Tại Sao Nên Sử Dụng Trợ Lý A.I Cá Nhân Hóa?</h2>
+            <div class="content-section">
+                <h3>Lợi ích nổi bật khi sử dụng trợ lý AI cá nhân hóa:</h3>
+                <ul class="automation-features">
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative"><i class="fas fa-infinity"
+                            style="position: absolute; left: 0; color: #3498db; top: 3px;"></i><strong>Không giới hạn số
+                            lượng trợ lý:</strong> Bạn có thể tạo hàng trăm trợ lý AI, mỗi trợ lý được thiết kế để đảm
+                        nhận một nhiệm vụ riêng biệt.</li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative"><i class="fas fa-clock"
+                            style="position: absolute; left: 0; color: #27ae60; top: 3px;"></i><strong>Hoạt động
+                            24/7:</strong> Trợ lý AI làm việc không ngừng nghỉ, không than phiền, không cần nghỉ phép.
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative"><i class="fas fa-cogs"
+                            style="position: absolute; left: 0; color: #9b59b6; top: 3px;"></i><strong>Tùy chỉnh linh
+                            hoạt:</strong> Trợ lý được bạn trực tiếp đào tạo và hướng dẫn, đảm bảo hoạt động theo ý
+                        muốn.</li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative"><i class="fas fa-chart-line"
+                            style="position: absolute; left: 0; color: #e74c3c; top: 3px;"></i><strong>Tăng hiệu quả
+                            công việc:</strong> Trợ lý AI cá nhân hóa hiểu đúng công việc đặc thù của bạn, giúp tăng
+                        hiệu quả ít nhất 2 lần.</li>
+                </ul>
+            </div>
+            <div class="content-section">
+                <h3>Trợ lý A.I này khác gì với ChatGPT thông thường?</h3>
+                <p>Cái này là sử dụng API của OPENAI (ChatGPT), về bản chất nó thông minh như ChatGPT nhưng có điểm khác
+                    biệt: kết hợp thêm AI Agent N8n để tự động hóa các phần mềm. Điều này có nghĩa là nó sẽ gắn kết các
+                    ứng dụng lại với nhau thông qua nền tảng nocode N8n, giúp trợ lý này có thể điều khiển các ứng dụng
+                    đó theo ý tưởng của anh em chúng ta mà không cần lập trình gì cả.</p>
+            </div>
+            <div class="content-section">
+                <h3>Tôi đang làm lĩnh vực… có áp dụng được trợ lý A.I cá nhân hóa không?</h3>
+                <p>Bạn đừng nghĩ nó cao siêu, nó đơn giản chỉ làm thay những công việc lặp đi lặp lại thôi, thay vì bạn
+                    thuê một người nào đó thì giờ bạn tạo các workflow theo công việc của chính bạn để tự động hóa những
+                    công việc đó, đơn giản vậy thôi.</p>
+            </div>
+            <div class="content-section">
+                <h3>Tôi không biết gì về công nghệ có học và tạo được không?</h3>
+                <p>Ai mới đầu mà không yếu công nghệ, thậm chí là số 0, nhưng cứ học tập thực hành nhiều sẽ quen thôi.
+                </p>
+                <p>Vướng thì gỡ thôi — chỉ là giai đoạn đầu anh em mình không quen với nền tảng nên sẽ vật vã.</p>
+            </div>
+        </div>
+    </section>
+    <section class="platform-security">
+        <div class="container">
+            <div class="content-section">
+                <h2 class="section-title">Huấn Luyện A.I Với Dữ Liệu Của Chính Bạn Cung Cấp</h2>
+                <h3 style="color: #00786a; margin-bottom: 20px;">Trợ Lý Chuyên Môn Của Chính Bạn</h3>
+                <p>Hãy thử tưởng tượng: bạn có một trợ lý chuyên môn dành riêng cho công việc của mình!</p>
+                <p>Bạn chỉ cần cung cấp dữ liệu, trợ lý sẽ hiểu, trả lời, thậm chí tư vấn bất cứ điều gì bạn cần. Mọi
+                    thắc mắc đều được giải đáp ngay lập tức, theo cách thông minh nhất!</p>
+                <p>Những kiến thức và kinh nghiệm quý báu bạn tích lũy được sẽ được lưu trữ trong trợ lý này.</p>
+            </div>
+        </div>
+    </section>
+    <section class="course-content">
+        <div class="container">
+            <h2 class="section-title">Các Trợ Lý A.I Phổ Biến</h2>
+            <p style="margin-bottom: 30px; text-align: justify;">Bạn có thể đào tạo trợ lý làm việc theo ý của chính
+                mình. Đây chỉ là một số trợ lý phổ biến đang được đào tạo nhiều nhất:</p>
+            <ul class="techniques-list">
+                <li><strong>Trợ Lý Học Tập - Cá Nhân Hóa Học Tập:</strong> Xây dựng lộ trình học riêng, giải đáp bài tập
+                    nhanh chóng, gợi ý tài liệu phù hợp.</li>
+                <li><strong>Trợ Lý Trích Dẫn Thông Tin Chính Xác:</strong> Trên mạng giờ đầy rẫy thông tin, nhưng để tìm
+                    được cái chính xác thì chẳng dễ chút nào.</li>
+                <li><strong>Trợ Lý Hướng Dẫn Quy Trình, Sản Phẩm Mới:</strong> Công ty thay đổi liên tục, ngày nào cũng
+                    phải đào tạo quy trình cho nhân viên mới.</li>
+                <li><strong>Trợ lý Hợp Đồng:</strong> Trợ lý hợp đồng giúp bạn tạo hợp đồng nhanh chóng bằng cách sử
+                    dụng mẫu có sẵn của công ty.</li>
+                <li><strong>Trợ Lý Đọc Dữ Liệu Các File Trên Đám Mây:</strong> Trợ lý có khả năng truy cập và đọc dữ
+                    liệu từ các file trong Google Drive của bạn.</li>
+                <li><strong>Trợ Lý Lấy Dữ Liệu Chứng Khoán:</strong> Bạn có thể tạo các trợ lý A.I đi sâu vào từng lĩnh
+                    vực của bạn.</li>
+            </ul>
+        </div>
+    </section>
+    <section class="learning-method">
+        <div class="container">
+            <h2 class="section-title">Cách Sử Dụng Trợ Lý A.I</h2>
+            <p style="margin-bottom: 20px; text-align: justify;">Sau khi tạo xong trợ lý, bạn sẽ truy cập vào tên miền
+                riêng của chính bạn (hoàn toàn miễn phí để sử dụng).</p>
+            <p style="margin-bottom: 20px; text-align: justify;">Khách hàng hoặc bạn sẽ chat với trợ lý này tương tự như
+                ChatGPT, chỉ khác là các trợ lý này được bạn đào tạo và định hướng câu trả lời theo những gì bạn muốn.
+            </p>
+            <div class="video-tutorial-section">
+                <h3 class="video-section-title">Video Hướng Dẫn Cách Sử Dụng Trợ Lý A.I</h3>
+                <div class="video-wrapper-square-tutorial">
+                    <iframe src="https://www.youtube.com/embed/Y2gV9aIRyRw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="course-content">
+        <div class="container">
+            <h2 class="section-title">Video Demo Các Trợ Lý A.I</h2>
+            <div class="video-grid">
+                <div class="video-item">
+                    <h4 class="video-title">Trợ Lý Đọc Dữ Liệu Các File Kết Nối Google Drive</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/kVV-yy25idQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <h4 class="video-title">Trợ Lý Lấy Dữ Liệu Chứng Khoán</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/cNhynRpDquA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <h4 class="video-title">Trợ Lý Tạo Hợp Đồng Nhanh Theo Template Đúng Form Công Ty</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/_X84nTlFPR4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <h4 class="video-title">Tạo Trợ Lý Nhắc Nhở Công Việc Theo Lịch Trình Với Zalo Bot</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/ZLm0shdI29w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <h4 class="video-title">Trợ Lý Nhắc Nhở Sếp Công Việc Hàng Ngày Qua Zalo Bot</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/r13tPQTwjWI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <h4 class="video-title">Trợ Lý Đọc File PDF Scan Tiếng Việt, Hóa Đơn Điện Tử Lưu Vào Google Sheets</h4>
+                    <div class="video-wrapper-square">
+                        <iframe src="https://www.youtube.com/embed/O_24E6eltaI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="course-content">
+        <div class="container">
+            <h2 class="section-title">Bạn Sẽ Nhận Được Gì Khi Đăng Ký?</h2>
+            <div class="content-section">
+                <h3>Những gì bạn sẽ nhận được:</h3>
+                <ul class="techniques-list">
+                    <li><strong>Các video hướng dẫn chi tiết:</strong> Từng bước để bạn tạo ra hàng trăm trợ lý A.I
+                        riêng cho chính bạn.</li>
+                    <li><strong>Hỗ trợ trực tiếp:</strong> Hỗ trợ qua Zalo, Ultraview, Zoom khi bạn gặp khó khăn.</li>
+                    <li><strong>Các template được tạo sẵn:</strong> Giúp bạn bắt đầu nhanh chóng, không cần tự mò mẫm.
+                    </li>
+                    <li><strong>Kiến thức về automation:</strong> Bạn sẽ học được cách tự động hóa công việc của mình.
+                    </li>
+                    <li><strong>Tài sản thuộc về bạn 100%:</strong> A.I bạn tạo ra sẽ là tài sản thuộc về bạn hoàn toàn.
+                    </li>
+                </ul>
+            </div>
+            <div class="content-section">
+                <h3>Có thể dùng thử không?</h3>
+                <p>Xin nói thẳng: Không có khái niệm "dùng thử" trong trường hợp này. Vì sao?</p>
+                <ul class="techniques-list">
+                    <li>Đây là việc tạo A.I riêng cho công việc đặc thù của bạn. Mỗi người một lĩnh vực, không ai giống
+                        ai.</li>
+                    <li>Chúng tôi không am hiểu công việc đặc thù của bạn để tạo sẵn một A.I phù hợp.</li>
+                    <li>Hiệu quả của A.I phụ thuộc vào cách bạn xây dựng workflow và training nó.</li>
+                    <li>Vì vậy, không thể có sẵn một A.I nào đúng với công việc của riêng bạn để "dùng thử".</li>
+                </ul>
+                <div style="text-align: center; margin: 30px 0;"><a href="https://chatbox.anhlaptrinh.vn/"
+                        target="_blank" class="demo-ai-button">Xem demo: https://chatbox.anhlaptrinh.vn/ <i
+                            class="fas fa-external-link-alt"></i></a></div>
+            </div>
+        </div>
+    </section>
+    <section class="learning-method">
+        <div class="container">
+            <h2 class="section-title">Cách Học Và Ứng Dụng Trợ Lý Cá Nhân Hóa Hiệu Quả</h2>
+            <p style="margin-bottom: 20px; text-align: justify; font-weight: 600; color: #00786a;">Yếu tố quan trọng
+                nhất là thái độ học tập. Bạn phải học với tâm thế như đây là cơ hội duy nhất để đột phá công việc.</p>
+            <p style="margin-bottom: 20px; text-align: justify;">Phương pháp học đúng ở đây là "vướng đâu gỡ đó" - cứ
+                ứng dụng vào công việc thực tế, gặp khó khăn thì tìm cách giải quyết. Bỏ qua lý thuyết đi, hãy làm quen
+                với nền tảng và phần mềm trước.</p>
+        </div>
+    </section>
+    <section class="course-description-section">
+        <div class="container">
+            <div class="pricing-description">
+                <h2 class="section-title">Tổng Chi Phí Để Sử Dụng Trợ Lý</h2>
+                <h3 style="color: #00786a; margin-bottom: 15px; margin-top: 30px;">1. Chi phí khóa học và hỗ trợ</h3>
+                <p>Anh em phải trả một khoản phí để có thể nhận được: Các video hướng dẫn chi tiết, Hỗ trợ qua Zalo,
+                    Ultraview, Zoom, Các template được tạo sẵn.</p>
+                <h3 style="color: #00786a; margin-bottom: 15px; margin-top: 30px;">2. Chi phí vận hành trợ lý</h3>
+                <p>Chi phí API của OpenAI rất rẻ, tầm 2$/ tháng, xài nhiều tính nhiều, không xài thì không tính phí.</p>
+                <h3 style="color: #00786a; margin-bottom: 15px; margin-top: 30px;">3. Tổng kết chi phí và lợi ích</h3>
+                <p>Với chỉ chi phí như vậy, bạn đã tăng gấp 2 lần hiệu quả công việc, xứng đáng đúng không?</p>
+            </div>
+        </div>
+    </section>
+    <section class="instructor" id="about">
+        <div class="container">
+            <h2 class="section-title">Người Hướng Dẫn Bạn Là Ai ?</h2>
+            <div class="instructor-card">
+                <div class="instructor-wrapper">
+                    <div class="instructor-image"><img src="https://tlai.anhlaptrinh.vn/static/images/ALT.png"
+                            alt="Anh Lập Trình - Nhuần" class="instructor-photo"></div>
+                    <div class="instructor-content">
+                        <p>Mình là <strong>Nhuần (Anh Lập Trình)</strong>, Mình cũng chỉ là một nhân viên văn phòng bình
+                            thường thôi, chả có gì nổi bật. Trước đó mình quyết định học lập trình để tạo sự khác biệt
+                            trong công việc với các đồng nghiệp.</p>
+                        <p>Giai đoạn đầu học tập, thật sự mình cũng bỏ cuộc nhiều lần, bỏ rồi học lại tới 4-5 lần. Nhưng
+                            sau đó, mình đã nhìn lại bản thân trong quá khứ và tự hỏi tại sao mình luôn yếu kém so với
+                            đồng nghiệp.</p>
+                    </div>
+                </div>
+                <div class="instructor-content-bottom">
+                    <p>Thì ra là do cách học sai. Cách học đúng và đơn giản ở đây là "vướng đâu gỡ đó" - cứ ứng dụng vào
+                        công việc thực tế, gặp khó khăn thì tìm cách giải quyết.</p>
+                    <p class="instructor-summary">Cách học "thực hành trước, lý thuyết sau - vướng đâu gỡ đó" đã thay
+                        đổi cả cuộc đời mình và có thể sẽ thay đổi cuộc đời bạn. Đừng lăn tăn quá nhiều, cứ mạnh dạn
+                        thực hành trước đã.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="pricing" id="register">
+        <div class="container">
+            <div class="pricing-card">
+                <form class="registration-form" id="registrationForm" method="POST">
+                    <h2 class="pricing-title-before-form">Phí tool và hướng dẫn tạo ra hàng trăm trợ lý là: 1480K cho 5
+                        anh em nhanh nhất hôm nay</h2>
+                    <p class="pricing-note">(phí sẽ tăng dần từng ngày)</p>
+                    <p class="guarantee-text">✅ Hoàn tiền trong vòng 07 ngày (không hỏi lý do)</p>
+                    <p class="guarantee-text">Nếu phát hiện chém gió không như quảng cáo chấp nhận phạt gấp 02 lần học
+                        phí</p>
+                    {% csrf_token %}
+                    <div class="form-group"><label for="name">Họ Và Tên</label><input type="text" id="name" name="name"
+                            required></div>
+                    <div class="form-group"><label for="email">Email *</label><input type="email" id="email"
+                            name="email" required></div>
+                    <div class="form-group"><label for="phone">Số Điện Thoại</label><input type="tel" id="phone"
+                            name="phone" placeholder="Nhập Số Điện Thoại"></div><button type="submit"
+                        class="submit-btn">Đăng Ký Ngay</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="course-content">
+        <div class="container">
+            <h2 class="section-title">Câu Hỏi Thường Gặp</h2>
+            <div class="content-section">
+                <h3>Với lại mình không có Web riêng thì sẽ xử dụng như thế nào?</h3>
+                <p>Bạn có thể tạo website miễn phí với tên miền riêng kết thúc bằng .streamlit.app hoặc tên miền riêng
+                    của chính bạn nếu bạn có sẵn. Điều tuyệt vời là bạn có thể tạo không giới hạn số lượng website.</p>
+            </div>
+        </div>
+    </section>
+    <footer class="footer" id="contact">
+        <div class="container">
+            <h2>Tự Động Hóa Cuộc Sống Với AI</h2>
+            <h3 class="footer-motto">Hướng dẫn tạo trợ lý ảo cho Cá Nhân Hay doanh nghiệp.</h3>
+            <div class="contact-info">
+                <p><strong>Liên Hệ</strong></p>
+                <p><strong>Email:</strong> contact@anhlaptrinh.com</p>
+                <p><strong>Điện thoại:</strong> 0914972102</p>
+                <p><strong>Công Ty TNHH Anh Lập Trình</strong></p>
+                <p><strong>Địa chỉ:</strong> Lầu 5: Toà Nhà ST. MORITZ, 1014 Phạm Văn Đồng, P, Thủ Đức, Thành phố Hồ Chí
+                    Minh</p>
+            </div>
+            <div class="social-links">
+                <h4>Kết nối với chúng tôi</h4>
+                <div class="social-icons-row"><a href="https://www.youtube.com/@pyanpython" target="_blank"
+                        class="social-link youtube-link"><i class="fab fa-youtube"></i> Anh Lập Trình</a><a
+                        href="https://www.facebook.com/tudonghoanocode/" target="_blank"
+                        class="social-link facebook-link"><i class="fab fa-facebook-f"></i> Anh Lập Trình</a></div>
+            </div>
+            <p class="copyright">© 2024. All rights reserved.</p>
+            <p class="footer-motto">Cứ ứng dụng vào công việc đi, vướng thì gỡ</p>
+        </div>
+    </footer>
+    <a href="#register" class="floating-cta">ĐĂNG KÝ NGAY</a>
+
+    <!-- Custom Notification -->
+    <div id="customNotification" class="custom-notification">
+        <div class="notification-content">
+            <i class="notification-icon"></i>
+            <span class="notification-message"></span>
+        </div>
+    </div>
+
+    <script>
+        // CSS cho notification
+        const notificationStyle = document.createElement('style');
+        notificationStyle.textContent = `
+            .custom-notification {
+                position: fixed;
+                top: 30px;
+                right: 30px;
+                z-index: 10000;
+                transform: translateX(400px);
+                transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+            .custom-notification.show {
+                transform: translateX(0);
+            }
+            .notification-content {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                font-weight: 600;
+                font-size: 1rem;
+            }
+            .custom-notification.success .notification-content {
+                background: linear-gradient(135deg, #27ae60, #00786a);
+                color: #fff;
+            }
+            .custom-notification.error .notification-content {
+                background: linear-gradient(135deg, #e74c3c, #c0392b);
+                color: #fff;
+            }
+            .notification-icon {
+                font-size: 1.4rem;
+            }
+        `;
+        document.head.appendChild(notificationStyle);
+
+        // Hiển thị notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('customNotification');
+            const icon = notification.querySelector('.notification-icon');
+            const messageSpan = notification.querySelector('.notification-message');
+            
+            icon.textContent = type === 'success' ? '✓' : '✕';
+            messageSpan.textContent = message;
+            
+            notification.className = 'custom-notification ' + type;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Lấy CSRF token từ cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Xử lý submit form
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const csrfToken = getCookie('csrftoken');
+            
+            // Hiển thị loading
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Đang xử lý...';
+            submitBtn.disabled = true;
+            
+            fetch('{% url "register" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                showNotification(data.message, data.success ? 'success' : 'error');
+                if (data.success) {
+                    this.reset();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+
+</html>
