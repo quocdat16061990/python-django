@@ -6,6 +6,30 @@ from .models import Task
 import requests
 
 
+def dashboard(request):
+    tasks = Task.objects.all()
+    total = tasks.count()
+    completed = tasks.filter(completed=True).count()
+    pending = total - completed
+
+    low_count = tasks.filter(priority='low').count()
+    medium_count = tasks.filter(priority='medium').count()
+    high_count = tasks.filter(priority='high').count()
+
+    tasks_by_priority = [
+        {'priority': 'Thấp', 'count': low_count, 'color': '#22c55e'},
+        {'priority': 'Trung bình', 'count': medium_count, 'color': '#eab308'},
+        {'priority': 'Cao', 'count': high_count, 'color': '#ef4444'},
+    ]
+
+    return render(request, 'tasks/dashboard.html', {
+        'total_tasks': total,
+        'completed_tasks': completed,
+        'pending_tasks': pending,
+        'tasks_by_priority': tasks_by_priority,
+    })
+
+
 def index(request):
     tasks = Task.objects.all()
     total = tasks.count()

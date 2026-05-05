@@ -9,7 +9,8 @@
       "Bash(flake8 . --count --max-complexity=10 --max-line-length=120 --statistics)",
       "Bash(pip install *)",
       "Bash(python manage.py test tasks)",
-      "Bash(.\\\\\\\\venv\\\\\\\\Scripts\\\\\\\\python.exe manage.py test tasks)"
+      "Bash(.\\\\\\\\venv\\\\\\\\Scripts\\\\\\\\python.exe manage.py test tasks)",
+      "Bash(flake8 . --count --statistics)"
     ]
   }
 }

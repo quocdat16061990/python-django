@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DevOverflow</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+        }
+        header {
+            background: #fff;
+            border-bottom: 2px solid #eef2ff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #2563eb;
+            letter-spacing: -0.5px;
+        }
+        .nav-menu a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .nav-menu a:hover { color: #2563eb; }
+        .nav-menu a.active { color: #2563eb; }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .dashboard-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: -30px auto 30px;
+            padding: 0 20px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+        .stat-card.total .number { color: #2563eb; }
+        .stat-card.completed .number { color: #22c55e; }
+        .stat-card.pending .number { color: #eab308; }
+
+        .chart-section {
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        .chart-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .chart-card h2 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .chart-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .priority-list {
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        .priority-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .priority-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .priority-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        .priority-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .priority-count {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .back-link {
+            text-align: center;
+            padding-bottom: 40px;
+        }
+        .back-link a {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .back-link a:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: #7c3aed;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 24px 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-text">DevOverflow</div>
+            <nav class="nav-menu">
+                <a href="{% url 'index' %}">Trang chủ</a>
+                <a href="{% url 'dashboard' %}" class="active">Dashboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="dashboard-header">
+        <h1><i class="fas fa-chart-bar"></i> Task Dashboard</h1>
+        <p>Thống kê công việc theo độ ưu tiên</p>
+    </section>
+
+    <section class="stats-grid">
+        <div class="stat-card total">
+            <div class="number">{{ total_tasks }}</div>
+            <div class="label"><i class="fas fa-tasks"></i> Tổng số</div>
+        </div>
+        <div class="stat-card completed">
+            <div class="number">{{ completed_tasks }}</div>
+            <div class="label"><i class="fas fa-check-circle"></i> Đã hoàn thành</div>
+        </div>
+        <div class="stat-card pending">
+            <div class="number">{{ pending_tasks }}</div>
+            <div class="label"><i class="fas fa-clock"></i> Đang chờ</div>
+        </div>
+    </section>
+
+    <section class="chart-section">
+        <div class="chart-card">
+            <h2><i class="fas fa-chart-pie"></i> Phân bố theo độ ưu tiên</h2>
+            <div class="chart-wrapper">
+                <canvas id="priorityChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section class="priority-list">
+        {% for item in tasks_by_priority %}
+        <div class="priority-item">
+            <div class="priority-left">
+                <span class="priority-dot" style="background: {{ item.color }}"></span>
+                <span class="priority-name">{{ item.priority }}</span>
+            </div>
+            <span class="priority-count" style="color: {{ item.color }}">{{ item.count }}</span>
+        </div>
+        {% endfor %}
+    </section>
+
+    <div class="back-link">
+        <a href="{% url 'index' %}"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</a>
+    </div>
+
+    <footer>
+        <p>DevOverflow &copy; 2024. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('priorityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for item in tasks_by_priority %}'{{ item.priority }}',{% endfor %}],
+                datasets: [{
+                    data: [{% for item in tasks_by_priority %}{{ item.count }},{% endfor %}],
+                    backgroundColor: [{% for item in tasks_by_priority %}'{{ item.color }}',{% endfor %}],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { size: 14, weight: 'bold' } }
+                    }
+                },
+                cutout: '65%',
+            }
+        });
+    </script>
+</body>
+</html>

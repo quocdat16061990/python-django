@@ -68,3 +68,19 @@ class TaskViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()["success"])
         self.assertEqual(Task.objects.count(), 0)
+
+
+class DashboardTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        Task.objects.create(title="Task 1", priority="high")
+        Task.objects.create(title="Task 2", priority="medium")
+        Task.objects.create(title="Task 3", priority="low", completed=True)
+
+    def test_dashboard_view(self):
+        response = self.client.get(reverse("dashboard"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Task Dashboard")
+        self.assertContains(response, "Tổng số")
+        self.assertContains(response, "Đã hoàn thành")
+        self.assertContains(response, "Đang chờ")
