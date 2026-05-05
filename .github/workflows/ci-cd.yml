@@ -44,16 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy files to VPS via rsync
-        uses: burnett01/rsync-deployments@7.0.2
-        with:
-          switches: -avz --delete --exclude='venv/' --exclude='.env' --exclude='.git/' --exclude='db.sqlite3'
-          path: .
-          remote_path: /home/${{ secrets.VPS_USER }}/python-django
-          remote_host: ${{ secrets.VPS_HOST }}
-          remote_user: ${{ secrets.VPS_USER }}
-          remote_key: ${{ secrets.VPS_SSH_KEY }}
-
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -62,6 +52,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/${{ secrets.VPS_USER }}/python-django
+            git pull origin main
             docker compose down
             docker compose up -d --build
             docker image prune -f
