@@ -36,7 +36,7 @@ class TaskViewTest(TestCase):
     def test_index_view(self):
         response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Test task")
+        self.assertContains(response, "Anh Lập Trình")
         self.assertTemplateUsed(response, "tasks/index.html")
 
     def test_add_task(self):
