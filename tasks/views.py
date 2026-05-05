@@ -4,7 +4,6 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from .models import Task
 import requests
-import json
 
 
 def index(request):
@@ -26,13 +25,13 @@ def register(request):
     name = request.POST.get('name', '').strip()
     email = request.POST.get('email', '').strip()
     phone = request.POST.get('phone', '').strip()
-    
+
     if not name or not email:
         return JsonResponse({'success': False, 'message': 'Vui lòng nhập đầy đủ thông tin!'}, status=400)
-    
+
     # Webhook URL
     WEBHOOK_URL = "https://n8n.devoverflow.xyz/webhook/tranhuuquocdatcontract"
-    
+
     # Tạo dữ liệu gửi đi
     payload = {
         "name": name,
@@ -40,26 +39,26 @@ def register(request):
         "phone": phone or "Không có",
         "source": "Website Anh Lập Trình"
     }
-    
+
     # Gửi đến webhook
     try:
         response = requests.post(WEBHOOK_URL, json=payload, timeout=10)
         print(f"Webhook Response: {response.status_code} - {response.text}")
-        
+
         if response.status_code in [200, 201, 202]:
             return JsonResponse({
-                'success': True, 
+                'success': True,
                 'message': 'Đăng ký thành công! Chúng tôi sẽ liên hệ sớm.'
             })
         else:
             return JsonResponse({
-                'success': True, 
+                'success': True,
                 'message': 'Đăng ký thành công!'
             })
     except Exception as e:
         print(f"Error calling webhook: {e}")
         return JsonResponse({
-            'success': True, 
+            'success': True,
             'message': 'Đăng ký thành công!'
         })
 

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pip show *)",
       "Bash(pip list *)",
-      "Bash(curl -s http://localhost:8000/)"
+      "Bash(curl -s http://localhost:8000/)",
+      "Bash(grep -n '[[:space:]]$' tasks/views.py)"
     ]
   }
 }
